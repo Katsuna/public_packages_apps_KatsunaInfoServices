@@ -1,0 +1,90 @@
+package com.katsuna.services.httpRequests;
+
+import android.app.Activity;
+
+import com.android.volley.Request;
+import com.android.volley.VolleyError;
+import com.katsuna.services.MainActivity;
+import com.katsuna.services.facade.RegisterFacade;
+import com.katsuna.services.http.HTTPCookieStore;
+import com.katsuna.services.http.HTTPManagerBase;
+import com.katsuna.services.http.JSONRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.net.CookieHandler;
+import java.net.CookieManager;
+import java.net.CookiePolicy;
+import java.net.CookieStore;
+import java.util.HashSet;
+import java.util.Set;
+
+/**
+ * Created by christosmitatakis on 3/5/17.
+ */
+
+public class HttpManager extends HTTPManagerBase {
+
+    private static CookieStore mCookieStore;
+    private static CookieManager mCookieManager;
+
+    private static synchronized CookieStore getCookieStore() {
+        if (mCookieStore == null) {
+            Set<String> cookies = new HashSet<>();
+            cookies.add("Katsuna_SessionId");
+            cookies.add("Katsuna.WebApp.Cookie");
+            mCookieStore = new HTTPCookieStore(MainActivity.getContext(), cookies);
+        }
+        return mCookieStore;
+    }
+
+    private static synchronized CookieManager getCookieManager() {
+        if (mCookieManager == null)
+            mCookieManager = new CookieManager(getCookieStore(), CookiePolicy.ACCEPT_ORIGINAL_SERVER);
+        return mCookieManager;
+    }
+
+    //region Request Enhancing
+
+    private static void enhanceAndExecuteRequest(Activity context, Request<?> request) {
+
+        CookieHandler.setDefault(getCookieManager());
+
+        execute(request);
+    }
+    //endregion
+
+
+    public static void RegisterCallback(final Activity context, RegisterFacade registerFacade, final KatsunaResponseHandler responseHandler) throws JSONException {
+
+        JSONObject params = new JSONObject();
+
+        params =  registerFacade.Serialize(context);
+
+        enhanceAndExecuteRequest(context, new JSONRequest(
+                Request.Method.POST,
+                ServerConstants.WebServer + ServerConstants.Register + ServerConstants.APIKey + ServerConstants.APIKeyValue ,
+                params,
+                new JSONRequest.RequestSuccessListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            responseHandler.onSuccess(new ResponseWrapper(response));
+                            System.out.println(response);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            responseHandler.onFailure();
+                        }
+                    }
+                },
+                new JSONRequest.RequestErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        responseHandler.onFailure();
+                    }
+                }
+        ));
+    }
+
+}
