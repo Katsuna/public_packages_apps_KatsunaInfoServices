@@ -21,11 +21,16 @@ public class MainActivity extends AppCompatActivity {
 
     private  final int period = 1000 * 60 *15;
 
+    public static Context getContext() {
+        return applicationContext;
+    }
+    static Context applicationContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        applicationContext = this.getApplicationContext();
         HttpManager.init(this.getApplicationContext());
 
         RegisterFacade registerFacade = PreferencesProvider.LoggedUserInfo(this);
