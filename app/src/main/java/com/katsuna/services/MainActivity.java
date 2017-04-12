@@ -10,6 +10,7 @@ import com.katsuna.services.Alarms.ReportingServerAlarm;
 import com.katsuna.services.Preferences.PreferencesProvider;
 import com.katsuna.services.facade.RegisterFacade;
 import com.katsuna.services.httpRequests.HttpManager;
+import com.katsuna.services.httpRequests.TokenRetryPolicy;
 import com.katsuna.services.managers.UserManager;
 
 import java.sql.Timestamp;
@@ -32,7 +33,7 @@ public class MainActivity extends Activity {
         activity = this;
         setContentView(R.layout.activity_main);
         applicationContext = this.getApplicationContext();
-        HttpManager.init(this.getApplicationContext());
+        HttpManager.init(this.getApplicationContext(), new TokenRetryPolicy(this));
 
         ReportingServerAlarm reportingServerAlarm = new ReportingServerAlarm();
         reportingServerAlarm.setAlarm(this);

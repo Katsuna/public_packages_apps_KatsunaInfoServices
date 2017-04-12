@@ -18,11 +18,14 @@ public class HTTPManagerBase {
     private static RequestQueue mQueue;
     private static ImageLoader mImageLoader;
     private static Context mContext;
+    private static RetryPolicy retryPolicy;
 
-    public static void init(Context context) {
+
+    public static void init(Context context, RetryPolicy mretryPolicy) {
         mContext = context;
         mQueue = Volley.newRequestQueue(mContext);
         mImageLoader = new ImageLoader(mQueue, new BitmapLruCache(MAX_IMAGE_CACHE_ENTRIES));
+        retryPolicy = mretryPolicy;
     }
 
     protected static void execute(Request<?> request) {
@@ -38,9 +41,9 @@ public class HTTPManagerBase {
             error.printStackTrace();
         }
 
-        int socketTimeout = 20000; //30 seconds
-        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
-        request.setRetryPolicy(policy);
+//        int socketTimeout = 20000; //30 seconds
+//        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        request.setRetryPolicy(retryPolicy);
 
         mQueue.add(request);
     }
