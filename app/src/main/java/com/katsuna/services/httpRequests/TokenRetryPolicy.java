@@ -6,6 +6,8 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.VolleyError;
 import com.katsuna.services.Preferences.PreferencesProvider;
+import com.katsuna.services.facade.RegisterFacade;
+import com.katsuna.services.managers.UserManager;
 
 public class TokenRetryPolicy extends DefaultRetryPolicy {
 
@@ -34,7 +36,27 @@ public class TokenRetryPolicy extends DefaultRetryPolicy {
 
         mCurrentRetryCount++;
         mCurrentTimeoutMs += (mCurrentTimeoutMs * mBackoffMultiplier);
-        if (error instanceof AuthFailureError && PreferencesProvider.LoggedUserInfo(activity) != null) {
+        RegisterFacade registerFacade = PreferencesProvider.LoggedUserInfo(activity);
+        if (error instanceof AuthFailureError && registerFacade != null) {
+
+            UserManager.renewToken(activity, registerFacade, new UserManager.RegisterOperationCompletedListener() {
+                @Override
+                public void OperationCompleted(UserManager.OperationCompletedStatus status, RegisterFacade registerFacade) {
+
+                    switch (status) {
+                        case Success:
+                            PreferencesProvider.SetLoggedUserInfo(activity, registerFacade);
+                            refreshToken = true;
+                            break;
+                        case ValidationError:
+                            break;
+                        case Error:
+                            break;
+                    }
+
+                }
+            });
+
 
             try {
                 Thread.sleep(5000);

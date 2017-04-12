@@ -2,8 +2,10 @@ package com.katsuna.services.Alarms;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
 import android.telephony.TelephonyManager;
 
+import com.jaredrummler.android.device.DeviceName;
 import com.katsuna.services.MainActivity;
 import com.katsuna.services.Preferences.PreferencesProvider;
 import com.katsuna.services.facade.RegisterFacade;
@@ -28,7 +30,13 @@ public class ReportingServerFunctions {
 
         RegisterFacade registerFacade = PreferencesProvider.LoggedUserInfo(activity);
         if (registerFacade != null && !registerFacade.getToken().isEmpty() && !registerFacade.getUserUniqueId().isEmpty()) {
-            System.out.println("User has already been sign in " + registerFacade.getToken() + " " + registerFacade.getUserUniqueId());
+            String deviceName = DeviceName.getDeviceName();
+            String reqString = Build.MANUFACTURER
+                    + " " + Build.MODEL + " " + Build.VERSION.RELEASE
+                    + " " + Build.VERSION_CODES.class.getFields()[android.os.Build.VERSION.SDK_INT].getName();
+            System.out.println("User has already been sign in " + registerFacade.getToken() + " " + registerFacade.getUserUniqueId() + " name: " + deviceName);
+
+            System.out.println(reqString);
 
         } else {
             Timestamp timestamp = new Timestamp(Calendar.getInstance().getTime().getTime());
@@ -38,14 +46,16 @@ public class ReportingServerFunctions {
             if (countryCode.isEmpty())
                 countryCode = Locale.getDefault().getCountry();
             String imei = manager.getDeviceId();
+            String imsi = manager.getSubscriberId();
             Date today = Calendar.getInstance().getTime();
             SimpleDateFormat sdf = new SimpleDateFormat("Z");
             String gmt = sdf.format(today);
             gmt = gmt.substring(0, Math.min(gmt.length(), 3));
 
-            System.out.println(gmt);
 
-            final RegisterFacade rFacade = new RegisterFacade(Long.parseLong(imei), "305899934E01D29B377E1168C626732501E0670E", countryCode, 30, "male", gmt, timestamp);
+
+
+            final RegisterFacade rFacade = new RegisterFacade(Long.parseLong(imei), imsi, countryCode, 30, "male", gmt, timestamp);
             UserManager.register(activity, rFacade, new UserManager.RegisterOperationCompletedListener() {
                 @Override
                 public void OperationCompleted(UserManager.OperationCompletedStatus status, final RegisterFacade registerFacade) {

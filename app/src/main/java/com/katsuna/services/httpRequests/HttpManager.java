@@ -13,6 +13,7 @@ import com.katsuna.services.http.JSONRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.net.CookieHandler;
 import java.net.CookieManager;
 import java.net.CookiePolicy;
@@ -64,8 +65,37 @@ public class HttpManager extends HTTPManagerBase {
 
         enhanceAndExecuteRequest(context, new JSONRequest(
                 Request.Method.POST,
-                ServerConstants.WebServer + ServerConstants.Register + ServerConstants.APIKey + ServerConstants.APIKeyValue ,
+                ServerConstants.WebServer + ServerConstants.user + ServerConstants.Register + ServerConstants.APIKey + ServerConstants.APIKeyValue ,
                 params,
+                new JSONRequest.RequestSuccessListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            responseHandler.onSuccess(new ResponseWrapper(response));
+                            System.out.println(response);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            responseHandler.onFailure();
+                        }
+                    }
+                },
+                new JSONRequest.RequestErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        responseHandler.onFailure();
+                    }
+                }
+        ));
+    }
+
+    public static void RenewTokenCallback(final Activity context, RegisterFacade registerFacade, final KatsunaResponseHandler responseHandler) throws JSONException {
+
+        JSONObject params = new JSONObject();
+
+        enhanceAndExecuteRequest(context, new JSONRequest(
+                Request.Method.POST,
+                ServerConstants.WebServer + ServerConstants.user  + File.separator + registerFacade.getUserUniqueId() + ServerConstants.RenewToken + ServerConstants.TOKEN +
+                        registerFacade.getToken() + ServerConstants.AND + ServerConstants.APIKey + ServerConstants.APIKeyValue , params,
                 new JSONRequest.RequestSuccessListener() {
                     @Override
                     public void onResponse(JSONObject response) {

@@ -7,7 +7,7 @@ package com.katsuna.services.httpRequests;
 public class ResponseKeys {
 
     // ResponseWrapper
-    public static final String ResponseWrapper_r = "isSuccessful";
+    public static final String ResponseWrapper_r = "isSuccessfull";
     public static final String ResponseWrapper_HTTP_ResponseCode = "httpResponseCode";
     public static final String ResponseWrapper_API_ResponseCode = "apiResponseCode";
     public static final String ResponseWrapper_d = "body";
