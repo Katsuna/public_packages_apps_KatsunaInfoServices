@@ -13,7 +13,6 @@ public class TokenRetryPolicy extends DefaultRetryPolicy {
 
 
     private final int mMaxNumRetries;
-    private Activity activity;
     private static final int socketTimeout = 40000; //30 seconds
     private int mCurrentRetryCount;
     private float mCurrentTimeoutMs;
@@ -21,13 +20,12 @@ public class TokenRetryPolicy extends DefaultRetryPolicy {
     private boolean refreshToken = false;
 
 
-    public TokenRetryPolicy(Activity activity)
+    public TokenRetryPolicy()
     {
         super(socketTimeout, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
         mCurrentTimeoutMs = socketTimeout;
         mMaxNumRetries = 3;
         mBackoffMultiplier = DefaultRetryPolicy.DEFAULT_BACKOFF_MULT;
-        this.activity = activity;
     }
 
     @Override
@@ -36,16 +34,16 @@ public class TokenRetryPolicy extends DefaultRetryPolicy {
 
         mCurrentRetryCount++;
         mCurrentTimeoutMs += (mCurrentTimeoutMs * mBackoffMultiplier);
-        RegisterFacade registerFacade = PreferencesProvider.LoggedUserInfo(activity);
+        RegisterFacade registerFacade = PreferencesProvider.LoggedUserInfo();
         if (error instanceof AuthFailureError && registerFacade != null) {
 
-            UserManager.renewToken(activity, registerFacade, new UserManager.RegisterOperationCompletedListener() {
+            UserManager.renewToken(registerFacade, new UserManager.RegisterOperationCompletedListener() {
                 @Override
                 public void OperationCompleted(UserManager.OperationCompletedStatus status, RegisterFacade registerFacade) {
 
                     switch (status) {
                         case Success:
-                            PreferencesProvider.SetLoggedUserInfo(activity, registerFacade);
+                            PreferencesProvider.SetLoggedUserInfo(registerFacade);
                             refreshToken = true;
                             break;
                         case ValidationError:

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.katsuna.infoservices.KatsunaInfoServicesApplication;
 import com.katsuna.infoservices.facade.RegisterFacade;
 
 import org.json.JSONException;
@@ -20,12 +21,12 @@ public class PreferencesProvider {
 
     static RegisterFacade registerFacade;
 
-    public static synchronized RegisterFacade LoggedUserInfo(Activity context) {
+    public static synchronized RegisterFacade LoggedUserInfo() {
         if (registerFacade == null) {
-            String prefString = getPreferences(context).getString(SharedPreferencesConstants.UserInfo, "");
+            String prefString = getPreferences().getString(SharedPreferencesConstants.UserInfo, "");
             if (!prefString.isEmpty()) {
                 try {
-                    registerFacade = new RegisterFacade().Deserialize(context, new JSONObject(prefString));
+                    registerFacade = new RegisterFacade().Deserialize( new JSONObject(prefString));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -34,17 +35,17 @@ public class PreferencesProvider {
         return registerFacade;
     }
 
-    public static synchronized void SetLoggedUserInfo(Activity context, RegisterFacade regFacade) {
+    public static synchronized void SetLoggedUserInfo( RegisterFacade regFacade) {
         try {
-            getPreferences(context).edit().putString(SharedPreferencesConstants.UserInfo, regFacade.PreferencesSerialize(context).toString()).apply();
+            getPreferences().edit().putString(SharedPreferencesConstants.UserInfo, regFacade.PreferencesSerialize().toString()).apply();
             registerFacade = regFacade;
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
-    private static SharedPreferences getPreferences(Activity context) {
-        return context.getSharedPreferences(KATSUNA_PREFS_NAME, Context.MODE_PRIVATE);
+    private static SharedPreferences getPreferences() {
+        return KatsunaInfoServicesApplication.getAppContext().getSharedPreferences(KATSUNA_PREFS_NAME, Context.MODE_PRIVATE);
     }
 
 }

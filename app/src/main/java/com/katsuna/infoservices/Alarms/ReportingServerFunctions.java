@@ -6,6 +6,7 @@ import android.os.Build;
 import android.telephony.TelephonyManager;
 
 import com.jaredrummler.android.device.DeviceName;
+import com.katsuna.infoservices.KatsunaInfoServicesApplication;
 import com.katsuna.infoservices.Preferences.PreferencesProvider;
 import com.katsuna.infoservices.facade.RegisterFacade;
 import com.katsuna.infoservices.managers.UserManager;
@@ -30,9 +31,7 @@ public class ReportingServerFunctions {
     public static  void register() {
 
 
-        final Activity activity = MainActivity.getActivity();
-
-        RegisterFacade registerFacade = PreferencesProvider.LoggedUserInfo(activity);
+        RegisterFacade registerFacade = PreferencesProvider.LoggedUserInfo();
         if (registerFacade != null && !registerFacade.getToken().isEmpty() && !registerFacade.getUserUniqueId().isEmpty()) {
             String deviceName = DeviceName.getDeviceName();
             String reqString = Build.MANUFACTURER
@@ -45,7 +44,7 @@ public class ReportingServerFunctions {
         } else {
             Timestamp timestamp = new Timestamp(Calendar.getInstance().getTime().getTime());
 
-            TelephonyManager manager = (TelephonyManager) activity.getSystemService(Context.TELEPHONY_SERVICE);
+            TelephonyManager manager = (TelephonyManager) KatsunaInfoServicesApplication.getAppContext().getSystemService(Context.TELEPHONY_SERVICE);
             String countryCode = manager.getSimCountryIso();
             if (countryCode.isEmpty())
                 countryCode = Locale.getDefault().getCountry();
@@ -63,12 +62,12 @@ public class ReportingServerFunctions {
 
 
             final RegisterFacade rFacade = new RegisterFacade(Long.parseLong(imei), imsi, countryCode, 30, "male", gmt, timestamp, katsunaVersion[1]);
-            UserManager.register(activity, rFacade, new UserManager.RegisterOperationCompletedListener() {
+            UserManager.register(rFacade, new UserManager.RegisterOperationCompletedListener() {
                 @Override
                 public void OperationCompleted(UserManager.OperationCompletedStatus status, final RegisterFacade registerFacade) {
                     switch (status) {
                         case Success:
-                            PreferencesProvider.SetLoggedUserInfo(activity, registerFacade);
+                            PreferencesProvider.SetLoggedUserInfo(registerFacade);
                             break;
                         case ValidationError:
                             break;

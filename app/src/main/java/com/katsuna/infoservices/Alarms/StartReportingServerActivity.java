@@ -14,9 +14,12 @@ public class StartReportingServerActivity   extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
+        System.out.println("On receive!!!!!!");
+
         if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
-            Intent activityIntent = new Intent(context, MainActivity.class);
-            context.startActivity(activityIntent);
+            System.out.println("On Boot receive!!!!!!");
+            Intent myIntent = new Intent(context, MainActivity.class);
+            context.startService(myIntent);
         }
 
     }

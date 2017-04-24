@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
+import com.katsuna.infoservices.KatsunaInfoServicesApplication;
 import com.katsuna.infoservices.MainActivity;
 import com.katsuna.infoservices.facade.RegisterFacade;
 import com.katsuna.infoservices.http.HTTPCookieStore;
@@ -35,7 +36,7 @@ public class HttpManager extends HTTPManagerBase {
             Set<String> cookies = new HashSet<>();
             cookies.add("Katsuna_SessionId");
             cookies.add("Katsuna.WebApp.Cookie");
-            mCookieStore = new HTTPCookieStore(MainActivity.getContext(), cookies);
+            mCookieStore = new HTTPCookieStore(KatsunaInfoServicesApplication.getAppContext(), cookies);
         }
         return mCookieStore;
     }
@@ -48,7 +49,7 @@ public class HttpManager extends HTTPManagerBase {
 
     //region Request Enhancing
 
-    private static void enhanceAndExecuteRequest(Activity context, Request<?> request) {
+    private static void enhanceAndExecuteRequest( Request<?> request) {
 
         CookieHandler.setDefault(getCookieManager());
 
@@ -57,13 +58,13 @@ public class HttpManager extends HTTPManagerBase {
     //endregion
 
 
-    public static void RegisterCallback(final Activity context, RegisterFacade registerFacade, final KatsunaResponseHandler responseHandler) throws JSONException {
+    public static void RegisterCallback( RegisterFacade registerFacade, final KatsunaResponseHandler responseHandler) throws JSONException {
 
         JSONObject params = new JSONObject();
 
-        params =  registerFacade.Serialize(context);
+        params =  registerFacade.Serialize();
 
-        enhanceAndExecuteRequest(context, new JSONRequest(
+        enhanceAndExecuteRequest( new JSONRequest(
                 Request.Method.POST,
                 ServerConstants.WebServer + ServerConstants.user + ServerConstants.Register + ServerConstants.APIKey + ServerConstants.APIKeyValue ,
                 params,
@@ -88,11 +89,11 @@ public class HttpManager extends HTTPManagerBase {
         ));
     }
 
-    public static void RenewTokenCallback(final Activity context, RegisterFacade registerFacade, final KatsunaResponseHandler responseHandler) throws JSONException {
+    public static void RenewTokenCallback( RegisterFacade registerFacade, final KatsunaResponseHandler responseHandler) throws JSONException {
 
         JSONObject params = new JSONObject();
 
-        enhanceAndExecuteRequest(context, new JSONRequest(
+        enhanceAndExecuteRequest( new JSONRequest(
                 Request.Method.POST,
                 ServerConstants.WebServer + ServerConstants.user  + File.separator + registerFacade.getUserUniqueId() + ServerConstants.RenewToken + ServerConstants.TOKEN +
                         registerFacade.getToken() + ServerConstants.AND + ServerConstants.APIKey + ServerConstants.APIKeyValue , params,

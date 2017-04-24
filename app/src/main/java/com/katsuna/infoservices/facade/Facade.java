@@ -12,9 +12,9 @@ public abstract class Facade {
 
     //region Serialization
 
-    public abstract Object Serialize(Activity context) throws JSONException;
+    public abstract Object Serialize() throws JSONException;
 
-    public abstract Object Deserialize(Activity context, Object payload) throws JSONException;
+    public abstract Object Deserialize(Object payload) throws JSONException;
 
 
 }

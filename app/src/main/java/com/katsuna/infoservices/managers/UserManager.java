@@ -17,14 +17,14 @@ import org.json.JSONObject;
 public class UserManager {
 
 
-    public static void register(final Activity context, RegisterFacade registerFacade, final RegisterOperationCompletedListener listener) {
+    public static void register(RegisterFacade registerFacade, final RegisterOperationCompletedListener listener) {
         try {
-            HttpManager.RegisterCallback(context, registerFacade, new KatsunaResponseHandler() {
+            HttpManager.RegisterCallback( registerFacade, new KatsunaResponseHandler() {
                 @Override
                 public void onSuccess(ResponseWrapper response) {
                     if (response.getStatusCode() == true) {
                         try {
-                            listener.OperationCompleted(OperationCompletedStatus.Success, new RegisterFacade().Deserialize(context, new JSONObject(response.getPayload())));
+                            listener.OperationCompleted(OperationCompletedStatus.Success, new RegisterFacade().Deserialize( new JSONObject(response.getPayload())));
                         } catch (Exception e) {
                             e.printStackTrace();
                             listener.OperationCompleted(OperationCompletedStatus.Error, null);
@@ -46,14 +46,14 @@ public class UserManager {
         }
     }
 
-    public static void renewToken(final Activity context, RegisterFacade registerFacade, final RegisterOperationCompletedListener listener) {
+    public static void renewToken(RegisterFacade registerFacade, final RegisterOperationCompletedListener listener) {
         try {
-            HttpManager.RenewTokenCallback(context, registerFacade, new KatsunaResponseHandler() {
+            HttpManager.RenewTokenCallback( registerFacade, new KatsunaResponseHandler() {
                 @Override
                 public void onSuccess(ResponseWrapper response) {
                     if (response.getStatusCode() == true) {
                         try {
-                            listener.OperationCompleted(OperationCompletedStatus.Success, new RegisterFacade().Deserialize(context, new JSONObject(response.getPayload())));
+                            listener.OperationCompleted(OperationCompletedStatus.Success, new RegisterFacade().Deserialize( new JSONObject(response.getPayload())));
                         } catch (Exception e) {
                             e.printStackTrace();
                             listener.OperationCompleted(OperationCompletedStatus.Error, null);

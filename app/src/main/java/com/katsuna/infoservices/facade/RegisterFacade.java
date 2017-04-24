@@ -128,7 +128,7 @@ public class RegisterFacade extends Facade
     }
 
     @Override
-    public JSONObject Serialize(Activity context) throws JSONException {
+    public JSONObject Serialize() throws JSONException {
 
 
         JSONObject jsonObject = new JSONObject();
@@ -145,7 +145,7 @@ public class RegisterFacade extends Facade
     }
 
     @Override
-    public RegisterFacade Deserialize(Activity context, Object payload) throws JSONException {
+    public RegisterFacade Deserialize(Object payload) throws JSONException {
         JSONObject jsonObject = (JSONObject) payload;
 
         userUniqueId = jsonObject.getString(ResponseKeys.RegisteFacade_UserUniqueId);
@@ -154,7 +154,7 @@ public class RegisterFacade extends Facade
         return this;
     }
 
-    public JSONObject PreferencesSerialize(Activity context) throws JSONException {
+    public JSONObject PreferencesSerialize() throws JSONException {
 
 
         JSONObject jsonObject = new JSONObject();
