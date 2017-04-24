@@ -11,6 +11,10 @@ import com.katsuna.infoservices.facade.RegisterFacade;
 import com.katsuna.infoservices.managers.UserManager;
 import com.katsuna.infoservices.MainActivity;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -51,11 +55,14 @@ public class ReportingServerFunctions {
             SimpleDateFormat sdf = new SimpleDateFormat("Z");
             String gmt = sdf.format(today);
             gmt = gmt.substring(0, Math.min(gmt.length(), 3));
+            String[] katsunaVersion = propReader().split(" ");
+            System.out.println(katsunaVersion[1]);
 
 
 
 
-            final RegisterFacade rFacade = new RegisterFacade(Long.parseLong(imei), imsi, countryCode, 30, "male", gmt, timestamp);
+
+            final RegisterFacade rFacade = new RegisterFacade(Long.parseLong(imei), imsi, countryCode, 30, "male", gmt, timestamp, katsunaVersion[1]);
             UserManager.register(activity, rFacade, new UserManager.RegisterOperationCompletedListener() {
                 @Override
                 public void OperationCompleted(UserManager.OperationCompletedStatus status, final RegisterFacade registerFacade) {
@@ -71,5 +78,36 @@ public class ReportingServerFunctions {
                 }
             });
         }
+    }
+
+    private static String propReader() {
+        Process process = null;
+        try {
+            process = new ProcessBuilder().command("/system/bin/getprop")
+                    .redirectErrorStream(true).start();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        InputStream in = process.getInputStream();
+
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+
+        StringBuilder log = new StringBuilder();
+        String line;
+        try {
+            while ((line = bufferedReader.readLine()) != null) {
+                if (line.contains("ro.katsuna.version"))
+                    log.append(line + "\n");
+            }
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+
+        process.destroy();
+        return log.toString();
     }
 }
