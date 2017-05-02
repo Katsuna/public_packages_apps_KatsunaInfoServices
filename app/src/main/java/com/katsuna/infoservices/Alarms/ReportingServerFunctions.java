@@ -55,13 +55,10 @@ public class ReportingServerFunctions {
             String gmt = sdf.format(today);
             gmt = gmt.substring(0, Math.min(gmt.length(), 3));
             String[] katsunaVersion = propReader().split(" ");
-            System.out.println(katsunaVersion[1]);
+            String model = Build.MANUFACTURER
+                    + " " + Build.MODEL;
 
-
-
-
-
-            final RegisterFacade rFacade = new RegisterFacade(Long.parseLong(imei), imsi, countryCode, 30, "male", gmt, timestamp, katsunaVersion[1]);
+            final RegisterFacade rFacade = new RegisterFacade(Long.parseLong(imei), imsi, countryCode, 30, "male", gmt, timestamp, katsunaVersion[1], model);
             UserManager.register(rFacade, new UserManager.RegisterOperationCompletedListener() {
                 @Override
                 public void OperationCompleted(UserManager.OperationCompletedStatus status, final RegisterFacade registerFacade) {

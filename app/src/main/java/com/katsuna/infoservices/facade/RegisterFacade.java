@@ -101,11 +101,20 @@ public class RegisterFacade extends Facade
         this.katsunaVersion = katsunaVersion;
     }
 
+    public String getModelNumber() {
+        return modelNumber;
+    }
+
+    public void setModelNumber(String modelNumber) {
+        this.modelNumber = modelNumber;
+    }
+
     private String countryCode;
     private int age;
     private String gender;
     private String timezone;
     private String katsunaVersion;
+    private String modelNumber;
 
     private Long timestamp;
 
@@ -114,7 +123,7 @@ public class RegisterFacade extends Facade
 
     }
 
-    public RegisterFacade (Long imei, String msisdn, String countryCode, int age, String gender, String timezone, Timestamp timestamp, String katsunaVersion)
+    public RegisterFacade (Long imei, String msisdn, String countryCode, int age, String gender, String timezone, Timestamp timestamp, String katsunaVersion, String modelNumber)
     {
         this.imei = imei;
         this.msisdn = msisdn;
@@ -124,6 +133,7 @@ public class RegisterFacade extends Facade
         this.timezone = timezone;
         this.timestamp = (Long) timestamp.getTime();
         this.katsunaVersion = katsunaVersion;
+        this.modelNumber = modelNumber;
 
     }
 
@@ -139,7 +149,8 @@ public class RegisterFacade extends Facade
         jsonObject.put(ResponseKeys.RegisteFacade_Gender, gender);
         jsonObject.put(ResponseKeys.RegisteFacade_TimeZone, timezone);
         jsonObject.put(ResponseKeys.RegisteFacade_Timestamp, timestamp);
-      //  jsonObject.put(ResponseKeys.RegisteFacade_Katsuna_Version, katsunaVersion);
+        jsonObject.put(ResponseKeys.RegisteFacade_Katsuna_Version, katsunaVersion);
+        jsonObject.put(ResponseKeys.RegisteFacade_Model_Number, modelNumber);
 
         return jsonObject;
     }

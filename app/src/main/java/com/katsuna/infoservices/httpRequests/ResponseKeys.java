@@ -24,6 +24,7 @@ public class ResponseKeys {
     public static final String RegisteFacade_UserUniqueId = "userUniqueId";
     public static final String RegisteFacade_Token = "token";
     public static final String RegisteFacade_Katsuna_Version = "katsunaVersion";
+    public static final String RegisteFacade_Model_Number = "modelNumber";
 
 
 
