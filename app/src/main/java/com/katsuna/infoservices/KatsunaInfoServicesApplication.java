@@ -9,14 +9,14 @@ import android.content.Context;
 
 public class KatsunaInfoServicesApplication extends Application {
 
-    private static Context mContext;
+private static Context mContext;
 
-    public static Context getAppContext() {
+public static Context getAppContext() {
         return mContext;
-    }
+        }
 
-    public void onCreate() {
+public void onCreate() {
         super.onCreate();
         mContext = getApplicationContext();
-    }
-}
+        }
+        }
