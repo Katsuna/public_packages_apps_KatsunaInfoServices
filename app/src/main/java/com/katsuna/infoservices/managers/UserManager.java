@@ -1,7 +1,5 @@
 package com.katsuna.infoservices.managers;
 
-import android.app.Activity;
-
 import com.katsuna.infoservices.facade.RegisterFacade;
 import com.katsuna.infoservices.httpRequests.HttpManager;
 import com.katsuna.infoservices.httpRequests.KatsunaResponseHandler;

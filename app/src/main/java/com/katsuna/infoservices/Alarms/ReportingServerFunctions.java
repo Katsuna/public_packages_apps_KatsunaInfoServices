@@ -1,6 +1,5 @@
 package com.katsuna.infoservices.Alarms;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
 import android.telephony.TelephonyManager;
@@ -10,7 +9,6 @@ import com.katsuna.infoservices.KatsunaInfoServicesApplication;
 import com.katsuna.infoservices.Preferences.PreferencesProvider;
 import com.katsuna.infoservices.facade.RegisterFacade;
 import com.katsuna.infoservices.managers.UserManager;
-import com.katsuna.infoservices.MainActivity;
 
 import java.io.BufferedReader;
 import java.io.IOException;

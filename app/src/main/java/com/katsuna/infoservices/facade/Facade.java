@@ -1,7 +1,5 @@
 package com.katsuna.infoservices.facade;
 
-import android.app.Activity;
-
 import org.json.JSONException;
 
 /**

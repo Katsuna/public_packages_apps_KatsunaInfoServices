@@ -1,7 +1,5 @@
 package com.katsuna.infoservices.httpRequests;
 
-import android.app.Activity;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.VolleyError;
