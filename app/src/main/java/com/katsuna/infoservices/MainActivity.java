@@ -14,7 +14,7 @@ import android.view.View;
 import com.katsuna.infoservices.Alarms.ReportingServerAlarm;
 import com.katsuna.infoservices.httpRequests.HttpManager;
 import com.katsuna.infoservices.httpRequests.TokenRetryPolicy;
-import com.katsuna.stats.R;
+import com.katsuna.infoservices.R;
 
 public class MainActivity extends Activity {
 
