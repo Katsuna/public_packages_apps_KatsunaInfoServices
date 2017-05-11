@@ -1,11 +1,8 @@
 package com.katsuna.infoservices.httpRequests;
 
-import android.app.Activity;
-
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.katsuna.infoservices.KatsunaInfoServicesApplication;
-import com.katsuna.infoservices.MainActivity;
 import com.katsuna.infoservices.facade.RegisterFacade;
 import com.katsuna.infoservices.http.HTTPCookieStore;
 import com.katsuna.infoservices.http.HTTPManagerBase;

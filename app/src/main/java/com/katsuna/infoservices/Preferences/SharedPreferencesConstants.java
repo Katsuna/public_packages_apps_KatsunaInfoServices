@@ -6,5 +6,5 @@ package com.katsuna.infoservices.Preferences;
 
 public class SharedPreferencesConstants {
 
-    public static final String UserInfo = "com.katsuna.stats.UserInfo";
+    public static final String UserInfo = "com.katsuna.infoservices.UserInfo";
 }
