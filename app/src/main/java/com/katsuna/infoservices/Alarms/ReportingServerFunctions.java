@@ -39,22 +39,22 @@ public class ReportingServerFunctions {
                     + " " + Build.VERSION_CODES.class.getFields()[android.os.Build.VERSION.SDK_INT].getName();
             System.out.println("User has already been sign in " + userFacade.getToken() + " " + userFacade.getUserUniqueId() + " name: " + deviceName);
 
-//            UserManager.renewToken(userFacade, new UserManager.RegisterOperationCompletedListener() {
-//                @Override
-//                public void OperationCompleted(UserManager.OperationCompletedStatus status, RegisterFacade userFacade) {
-//
-//                    switch (status) {
-//                        case Success:
-//                            PreferencesProvider.SetLoggedUserInfo(userFacade);
-//                            break;
-//                        case ValidationError:
-//                            break;
-//                        case Error:
-//                            break;
-//                    }
-//
-//                }
-//            });
+            UserManager.renewToken(userFacade, new UserManager.RegisterOperationCompletedListener() {
+                @Override
+                public void OperationCompleted(UserManager.OperationCompletedStatus status, RegisterFacade userFacade) {
+
+                    switch (status) {
+                        case Success:
+                            PreferencesProvider.SetLoggedUserInfo(userFacade);
+                            break;
+                        case ValidationError:
+                            break;
+                        case Error:
+                            break;
+                    }
+
+                }
+            });
 
             System.out.println(reqString);
 

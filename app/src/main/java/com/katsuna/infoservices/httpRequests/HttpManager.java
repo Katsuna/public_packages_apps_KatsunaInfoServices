@@ -90,12 +90,10 @@ public class HttpManager extends HTTPManagerBase {
     public static void RenewTokenCallback(RegisterFacade userFacade, final KatsunaResponseHandler responseHandler) throws JSONException {
 
         JSONObject params = new JSONObject();
-        params.put(ResponseKeys.RenewToken_User_Id, userFacade.getUserUniqueId());
-        params.put(ResponseKeys.RenewToken_User_Token, userFacade.getToken());
 
         enhanceAndExecuteRequest( new JSONRequest(
                 Request.Method.POST,
-                ServerConstants.WebServer + ServerConstants.User  + File.separator + userFacade.getUserUniqueId() + ServerConstants.RenewToken , params,
+                ServerConstants.WebServer + ServerConstants.User  + File.separator + userFacade.getUserUniqueId() + ServerConstants.RenewToken + ServerConstants.Token + userFacade.getToken() , params,
                 new JSONRequest.RequestSuccessListener() {
                     @Override
                     public void onResponse(JSONObject response) {
