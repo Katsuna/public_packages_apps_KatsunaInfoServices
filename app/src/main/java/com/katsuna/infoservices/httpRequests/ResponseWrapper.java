@@ -10,7 +10,7 @@ import org.json.JSONObject;
 public class ResponseWrapper {
     private boolean mStatusCode;
     private String mPayload;
-    private int mHttpCode;
+    private String mHttpCode;
     private  ApiResponseCode mApiCode;
 
     public ResponseWrapper(Boolean statusCode, String payload) {
@@ -23,7 +23,7 @@ public class ResponseWrapper {
 
         mStatusCode = jsonObject.getBoolean(ResponseKeys.ResponseWrapper_r);
         mPayload = jsonObject.getString(ResponseKeys.ResponseWrapper_d);
-        mHttpCode = jsonObject.getInt(ResponseKeys.ResponseWrapper_HTTP_ResponseCode);
+        mHttpCode = jsonObject.getString(ResponseKeys.ResponseWrapper_HTTP_ResponseCode);
         mApiCode = ApiResponseCode.valueOf(jsonObject.getInt(ResponseKeys.ResponseWrapper_API_ResponseCode));
 
 
@@ -31,11 +31,11 @@ public class ResponseWrapper {
     }
 
 
-    public int getmHttpCode() {
+    public String getmHttpCode() {
         return mHttpCode;
     }
 
-    public void setmHttpCode(int mHttpCode) {
+    public void setmHttpCode(String mHttpCode) {
         this.mHttpCode = mHttpCode;
     }
 

@@ -5,6 +5,7 @@ import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.VolleyError;
 import com.katsuna.infoservices.Preferences.PreferencesProvider;
 import com.katsuna.infoservices.facade.RegisterFacade;
+import com.katsuna.infoservices.facade.UserFacade;
 import com.katsuna.infoservices.managers.UserManager;
 
 public class TokenRetryPolicy extends DefaultRetryPolicy {
@@ -32,16 +33,16 @@ public class TokenRetryPolicy extends DefaultRetryPolicy {
 
         mCurrentRetryCount++;
         mCurrentTimeoutMs += (mCurrentTimeoutMs * mBackoffMultiplier);
-        RegisterFacade registerFacade = PreferencesProvider.LoggedUserInfo();
-        if (error instanceof AuthFailureError && registerFacade != null) {
+        RegisterFacade userFacade = PreferencesProvider.LoggedUserInfo();
+        if (error instanceof AuthFailureError && userFacade != null) {
 
-            UserManager.renewToken(registerFacade, new UserManager.RegisterOperationCompletedListener() {
+            UserManager.renewToken(userFacade, new UserManager.RegisterOperationCompletedListener() {
                 @Override
-                public void OperationCompleted(UserManager.OperationCompletedStatus status, RegisterFacade registerFacade) {
+                public void OperationCompleted(UserManager.OperationCompletedStatus status, RegisterFacade userFacade) {
 
                     switch (status) {
                         case Success:
-                            PreferencesProvider.SetLoggedUserInfo(registerFacade);
+                            PreferencesProvider.SetLoggedUserInfo(userFacade);
                             refreshToken = true;
                             break;
                         case ValidationError:

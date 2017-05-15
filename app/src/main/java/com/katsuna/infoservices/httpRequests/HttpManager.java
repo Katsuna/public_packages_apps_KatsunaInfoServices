@@ -4,6 +4,7 @@ import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.katsuna.infoservices.KatsunaInfoServicesApplication;
 import com.katsuna.infoservices.facade.RegisterFacade;
+import com.katsuna.infoservices.facade.UserFacade;
 import com.katsuna.infoservices.http.HTTPCookieStore;
 import com.katsuna.infoservices.http.HTTPManagerBase;
 import com.katsuna.infoservices.http.JSONRequest;
@@ -55,15 +56,15 @@ public class HttpManager extends HTTPManagerBase {
     //endregion
 
 
-    public static void RegisterCallback( RegisterFacade registerFacade, final KatsunaResponseHandler responseHandler) throws JSONException {
+    public static void RegisterCallback(RegisterFacade userFacade, final KatsunaResponseHandler responseHandler) throws JSONException {
 
         JSONObject params = new JSONObject();
 
-        params =  registerFacade.Serialize();
+        params =  userFacade.Serialize();
 
         enhanceAndExecuteRequest( new JSONRequest(
                 Request.Method.POST,
-                ServerConstants.WebServer + ServerConstants.user + ServerConstants.Register + ServerConstants.APIKey + ServerConstants.APIKeyValue ,
+                ServerConstants.WebServer + ServerConstants.User + ServerConstants.Register ,
                 params,
                 new JSONRequest.RequestSuccessListener() {
                     @Override
@@ -86,14 +87,15 @@ public class HttpManager extends HTTPManagerBase {
         ));
     }
 
-    public static void RenewTokenCallback( RegisterFacade registerFacade, final KatsunaResponseHandler responseHandler) throws JSONException {
+    public static void RenewTokenCallback(RegisterFacade userFacade, final KatsunaResponseHandler responseHandler) throws JSONException {
 
         JSONObject params = new JSONObject();
+        params.put(ResponseKeys.RenewToken_User_Id, userFacade.getUserUniqueId());
+        params.put(ResponseKeys.RenewToken_User_Token, userFacade.getToken());
 
         enhanceAndExecuteRequest( new JSONRequest(
                 Request.Method.POST,
-                ServerConstants.WebServer + ServerConstants.user  + File.separator + registerFacade.getUserUniqueId() + ServerConstants.RenewToken + ServerConstants.TOKEN +
-                        registerFacade.getToken() + ServerConstants.AND + ServerConstants.APIKey + ServerConstants.APIKeyValue , params,
+                ServerConstants.WebServer + ServerConstants.User  + File.separator + userFacade.getUserUniqueId() + ServerConstants.RenewToken , params,
                 new JSONRequest.RequestSuccessListener() {
                     @Override
                     public void onResponse(JSONObject response) {

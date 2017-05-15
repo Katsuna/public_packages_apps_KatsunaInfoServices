@@ -1,6 +1,7 @@
 package com.katsuna.infoservices.managers;
 
 import com.katsuna.infoservices.facade.RegisterFacade;
+import com.katsuna.infoservices.facade.UserFacade;
 import com.katsuna.infoservices.httpRequests.HttpManager;
 import com.katsuna.infoservices.httpRequests.KatsunaResponseHandler;
 import com.katsuna.infoservices.httpRequests.ResponseWrapper;
@@ -15,9 +16,9 @@ import org.json.JSONObject;
 public class UserManager {
 
 
-    public static void register(RegisterFacade registerFacade, final RegisterOperationCompletedListener listener) {
+    public static void register(RegisterFacade userFacade, final RegisterOperationCompletedListener listener) {
         try {
-            HttpManager.RegisterCallback( registerFacade, new KatsunaResponseHandler() {
+            HttpManager.RegisterCallback(userFacade, new KatsunaResponseHandler() {
                 @Override
                 public void onSuccess(ResponseWrapper response) {
                     if (response.getStatusCode() == true) {
@@ -44,9 +45,9 @@ public class UserManager {
         }
     }
 
-    public static void renewToken(RegisterFacade registerFacade, final RegisterOperationCompletedListener listener) {
+    public static void renewToken(RegisterFacade userFacade, final RegisterOperationCompletedListener listener) {
         try {
-            HttpManager.RenewTokenCallback( registerFacade, new KatsunaResponseHandler() {
+            HttpManager.RenewTokenCallback(userFacade, new KatsunaResponseHandler() {
                 @Override
                 public void onSuccess(ResponseWrapper response) {
                     if (response.getStatusCode() == true) {

@@ -8,6 +8,8 @@ import com.jaredrummler.android.device.DeviceName;
 import com.katsuna.infoservices.KatsunaInfoServicesApplication;
 import com.katsuna.infoservices.Preferences.PreferencesProvider;
 import com.katsuna.infoservices.facade.RegisterFacade;
+import com.katsuna.infoservices.facade.UserFacade;
+import com.katsuna.infoservices.facade.UserTimezoneFacade;
 import com.katsuna.infoservices.managers.UserManager;
 
 import java.io.BufferedReader;
@@ -29,13 +31,30 @@ public class ReportingServerFunctions {
     public static  void register() {
 
 
-        RegisterFacade registerFacade = PreferencesProvider.LoggedUserInfo();
-        if (registerFacade != null && !registerFacade.getToken().isEmpty() && !registerFacade.getUserUniqueId().isEmpty()) {
+        RegisterFacade userFacade = PreferencesProvider.LoggedUserInfo();
+        if (userFacade != null && !userFacade.getToken().isEmpty() && !userFacade.getUserUniqueId().isEmpty()) {
             String deviceName = DeviceName.getDeviceName();
             String reqString = Build.MANUFACTURER
                     + " " + Build.MODEL + " " + Build.VERSION.RELEASE
                     + " " + Build.VERSION_CODES.class.getFields()[android.os.Build.VERSION.SDK_INT].getName();
-            System.out.println("User has already been sign in " + registerFacade.getToken() + " " + registerFacade.getUserUniqueId() + " name: " + deviceName);
+            System.out.println("User has already been sign in " + userFacade.getToken() + " " + userFacade.getUserUniqueId() + " name: " + deviceName);
+
+//            UserManager.renewToken(userFacade, new UserManager.RegisterOperationCompletedListener() {
+//                @Override
+//                public void OperationCompleted(UserManager.OperationCompletedStatus status, RegisterFacade userFacade) {
+//
+//                    switch (status) {
+//                        case Success:
+//                            PreferencesProvider.SetLoggedUserInfo(userFacade);
+//                            break;
+//                        case ValidationError:
+//                            break;
+//                        case Error:
+//                            break;
+//                    }
+//
+//                }
+//            });
 
             System.out.println(reqString);
 
@@ -56,13 +75,19 @@ public class ReportingServerFunctions {
             String model = Build.MANUFACTURER
                     + " " + Build.MODEL;
 
-            final RegisterFacade rFacade = new RegisterFacade(Long.parseLong(imei), imsi, countryCode, 30, "male", gmt, timestamp, katsunaVersion[1], model);
-            UserManager.register(rFacade, new UserManager.RegisterOperationCompletedListener() {
+            UserFacade rFacade = new UserFacade(Long.parseLong(imei), imsi, countryCode, 30, "male", katsunaVersion[1], model);
+            UserTimezoneFacade userTimezoneFacade = new UserTimezoneFacade();
+            userTimezoneFacade.setDateTimestamp(timestamp.getTime());
+            userTimezoneFacade.setTimezoneValue(gmt);
+
+            final RegisterFacade registerFacade = new RegisterFacade(rFacade, userTimezoneFacade);
+
+            UserManager.register(registerFacade, new UserManager.RegisterOperationCompletedListener() {
                 @Override
-                public void OperationCompleted(UserManager.OperationCompletedStatus status, final RegisterFacade registerFacade) {
+                public void OperationCompleted(UserManager.OperationCompletedStatus status, final RegisterFacade registerfacade) {
                     switch (status) {
                         case Success:
-                            PreferencesProvider.SetLoggedUserInfo(registerFacade);
+                            PreferencesProvider.SetLoggedUserInfo(registerfacade);
                             break;
                         case ValidationError:
                             break;
