@@ -47,7 +47,7 @@ public class HttpManager extends HTTPManagerBase {
 
     //region Request Enhancing
 
-    private static void enhanceAndExecuteRequest( Request<?> request) {
+    public static void enhanceAndExecuteRequest( Request<?> request) {
 
         CookieHandler.setDefault(getCookieManager());
 
@@ -64,7 +64,7 @@ public class HttpManager extends HTTPManagerBase {
 
         enhanceAndExecuteRequest( new JSONRequest(
                 Request.Method.POST,
-                ServerConstants.WebServer + ServerConstants.User + ServerConstants.Register ,
+                ServerConstants.WebServer + ServerConstants.Register ,
                 params,
                 new JSONRequest.RequestSuccessListener() {
                     @Override
@@ -93,7 +93,7 @@ public class HttpManager extends HTTPManagerBase {
 
         enhanceAndExecuteRequest( new JSONRequest(
                 Request.Method.POST,
-                ServerConstants.WebServer + ServerConstants.User  + File.separator + userFacade.getUserUniqueId() + ServerConstants.RenewToken + ServerConstants.Token + userFacade.getToken() , params,
+                ServerConstants.WebServer  + ServerConstants.RenewToken  , params,
                 new JSONRequest.RequestSuccessListener() {
                     @Override
                     public void onResponse(JSONObject response) {

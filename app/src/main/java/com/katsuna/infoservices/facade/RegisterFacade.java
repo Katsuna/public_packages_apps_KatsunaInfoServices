@@ -11,7 +11,7 @@ import org.json.JSONObject;
 
 public class RegisterFacade extends Facade {
 
-    private String userUniqueId;
+    private String refreshToken;
     private String token;
 
     private UserFacade user;
@@ -25,6 +25,22 @@ public class RegisterFacade extends Facade {
 
     public RegisterFacade() {
 
+    }
+
+    public String getRefreshToken() {
+        return refreshToken;
+    }
+
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public UserFacade getUser() {
@@ -43,22 +59,6 @@ public class RegisterFacade extends Facade {
         this.userTimezoneFacade = userTimezoneFacade;
     }
 
-    public String getUserUniqueId() {
-        return userUniqueId;
-    }
-
-    public void setUserUniqueId(String userUniqueId) {
-        this.userUniqueId = userUniqueId;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
 
     @Override
     public JSONObject Serialize() throws JSONException {
@@ -74,7 +74,7 @@ public class RegisterFacade extends Facade {
     public RegisterFacade Deserialize(Object payload) throws JSONException {
         JSONObject jsonObject = (JSONObject) payload;
 
-        userUniqueId = jsonObject.getString(ResponseKeys.RegisteFacade_UserUniqueId);
+        refreshToken = jsonObject.getString(ResponseKeys.RegisteFacade_Refresh_Token);
         token = jsonObject.getString(ResponseKeys.RegisteFacade_Token);
 
         return this;
@@ -85,7 +85,7 @@ public class RegisterFacade extends Facade {
 
         JSONObject jsonObject = new JSONObject();
 
-        jsonObject.put(ResponseKeys.RegisteFacade_UserUniqueId, userUniqueId);
+        jsonObject.put(ResponseKeys.RegisteFacade_Refresh_Token, refreshToken);
         jsonObject.put(ResponseKeys.RegisteFacade_Token, token);
 
         return jsonObject;

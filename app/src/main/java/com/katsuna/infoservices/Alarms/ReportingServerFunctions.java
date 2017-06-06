@@ -32,12 +32,12 @@ public class ReportingServerFunctions {
 
 
         RegisterFacade userFacade = PreferencesProvider.LoggedUserInfo();
-        if (userFacade != null && !userFacade.getToken().isEmpty() && !userFacade.getUserUniqueId().isEmpty()) {
+        if (userFacade != null && !userFacade.getToken().isEmpty() ) {
             String deviceName = DeviceName.getDeviceName();
             String reqString = Build.MANUFACTURER
                     + " " + Build.MODEL + " " + Build.VERSION.RELEASE
                     + " " + Build.VERSION_CODES.class.getFields()[android.os.Build.VERSION.SDK_INT].getName();
-            System.out.println("User has already been sign in " + userFacade.getToken() + " " + userFacade.getUserUniqueId() + " name: " + deviceName);
+            System.out.println("User has already been sign in " + userFacade.getToken() + " " + userFacade.getRefreshToken() + " name: " + deviceName);
 
             UserManager.renewToken(userFacade, new UserManager.RegisterOperationCompletedListener() {
                 @Override

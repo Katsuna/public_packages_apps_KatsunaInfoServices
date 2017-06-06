@@ -19,8 +19,8 @@ public class ResponseKeys {
     public static final String RegisteFacade_CountryCode = "countryCode";
     public static final String RegisteFacade_Age = "age";
     public static final String RegisteFacade_Gender = "gender";
-    public static final String RegisteFacade_UserUniqueId = "userUniqueId";
-    public static final String RegisteFacade_Token = "token";
+    public static final String RegisteFacade_Token = "jwtToken";
+    public static final String RegisteFacade_Refresh_Token = "refreshToken";
     public static final String RegisteFacade_Katsuna_Version = "katsunaVersion";
     public static final String RegisteFacade_Model_Number = "modelNumber";
 
