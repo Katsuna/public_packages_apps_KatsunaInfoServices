@@ -45,9 +45,9 @@ public class UserManager {
         }
     }
 
-    public static void renewToken(RegisterFacade userFacade, final RegisterOperationCompletedListener listener) {
+    public static void renewToken(final RenewTokenOperationCompletedListener listener) {
         try {
-            HttpManager.RenewTokenCallback(userFacade, new KatsunaResponseHandler() {
+            HttpManager.RenewTokenCallback(new KatsunaResponseHandler() {
                 @Override
                 public void onSuccess(ResponseWrapper response) {
                     if (response.getStatusCode() == true) {
@@ -78,6 +78,10 @@ public class UserManager {
 
 
     public interface RegisterOperationCompletedListener {
+        void OperationCompleted(OperationCompletedStatus status, RegisterFacade organizationalUnitFacade);
+    }
+
+    public interface RenewTokenOperationCompletedListener {
         void OperationCompleted(OperationCompletedStatus status, RegisterFacade organizationalUnitFacade);
     }
 

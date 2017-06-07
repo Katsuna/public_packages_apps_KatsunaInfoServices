@@ -7,6 +7,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.RetryPolicy;
 import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.katsuna.infoservices.logging.Logger;
 
@@ -36,6 +37,8 @@ public class HTTPManagerBase {
                 Logger.Log("Requesting: " + request.getUrl() + " " + "with params: " + new String(request.getBody()));
             else if (request instanceof MultipartRequest)
                 Logger.Log("Uploading to: " + request.getUrl());
+            else if (request instanceof StringRequest)
+                Logger.Log("Requesting: " + request.getUrl()+ " " + "with headers: " + new String(String.valueOf(request.getHeaders())));
         } catch (Exception error) {
             error.printStackTrace();
         }

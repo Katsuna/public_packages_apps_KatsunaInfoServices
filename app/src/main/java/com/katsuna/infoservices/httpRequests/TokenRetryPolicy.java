@@ -50,47 +50,24 @@ public class TokenRetryPolicy extends DefaultRetryPolicy {
         RegisterFacade userFacade = PreferencesProvider.LoggedUserInfo();
         if (error instanceof AuthFailureError && userFacade != null) {
 
-//            UserManager.renewToken(userFacade, new UserManager.RegisterOperationCompletedListener() {
-//                @Override
-//                public void OperationCompleted(UserManager.OperationCompletedStatus status, RegisterFacade userFacade) {
-//
-//                    switch (status) {
-//                        case Success:
-//                            PreferencesProvider.SetLoggedUserInfo(userFacade);
-//                            refreshToken = true;
-//                            break;
-//                        case ValidationError:
-//                            break;
-//                        case Error:
-//                            break;
-//                    }
-//
-//                }
-//            });
-
-            String url = ServerConstants.WebServer + ServerConstants.RenewToken;
-
-            StringRequest strRequest = new StringRequest(Request.Method.POST, url,
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            System.out.println(response);
-                        }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                        }
-                    }) {
+            UserManager.renewToken( new UserManager.RenewTokenOperationCompletedListener() {
                 @Override
-                protected Map<String, String> getParams() {
-                    Map<String, String> params = new HashMap<String, String>();
-                    params.put("Bearer ", "test");
-                    return params;
-                }
-            };
+                public void OperationCompleted(UserManager.OperationCompletedStatus status, RegisterFacade userFacade) {
 
-            HttpManager.enhanceAndExecuteRequest(strRequest);
+                    switch (status) {
+                        case Success:
+                            PreferencesProvider.SetLoggedUserInfo(userFacade);
+                            refreshToken = true;
+                            break;
+                        case ValidationError:
+                            break;
+                        case Error:
+                            break;
+                    }
+
+                }
+            });
+
 
             System.out.println("Current: " + mCurrentRetryCount + "TOTAL: " + mMaxNumRetries);
 

@@ -8,6 +8,7 @@ import com.katsuna.infoservices.facade.UserFacade;
 import com.katsuna.infoservices.http.HTTPCookieStore;
 import com.katsuna.infoservices.http.HTTPManagerBase;
 import com.katsuna.infoservices.http.JSONRequest;
+import com.katsuna.infoservices.http.JSONRequestWithHeaders;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -47,7 +48,7 @@ public class HttpManager extends HTTPManagerBase {
 
     //region Request Enhancing
 
-    public static void enhanceAndExecuteRequest( Request<?> request) {
+    protected static void enhanceAndExecuteRequest( Request<?> request) {
 
         CookieHandler.setDefault(getCookieManager());
 
@@ -87,12 +88,11 @@ public class HttpManager extends HTTPManagerBase {
         ));
     }
 
-    public static void RenewTokenCallback(RegisterFacade userFacade, final KatsunaResponseHandler responseHandler) throws JSONException {
+    public static void RenewTokenCallback(final KatsunaResponseHandler responseHandler) throws JSONException {
 
         JSONObject params = new JSONObject();
 
-        enhanceAndExecuteRequest( new JSONRequest(
-                Request.Method.POST,
+        enhanceAndExecuteRequest(JSONRequestWithHeaders.JSONRequestWithRenewToken( Request.Method.POST,
                 ServerConstants.WebServer  + ServerConstants.RenewToken  , params,
                 new JSONRequest.RequestSuccessListener() {
                     @Override
@@ -111,8 +111,9 @@ public class HttpManager extends HTTPManagerBase {
                     public void onErrorResponse(VolleyError error) {
                         responseHandler.onFailure();
                     }
-                }
-        ));
+                }));
+
+
     }
 
 }
