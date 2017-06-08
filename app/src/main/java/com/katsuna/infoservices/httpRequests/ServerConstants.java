@@ -6,9 +6,9 @@ package com.katsuna.infoservices.httpRequests;
 
 public class ServerConstants {
 
-  //  public static final String WebServer = "http://46.4.91.183:8080";
+    public static final String WebServer = "http://info.katsuna.com:8080/KatsunaInfoServer";
 
-    public static final String WebServer = "http://devel-14.local.cite.gr:8080";
+//    public static final String WebServer = "http://devel-14.local.cite.gr:8080";
 
     // Registration Call
 
