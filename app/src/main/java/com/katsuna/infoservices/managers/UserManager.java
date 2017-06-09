@@ -1,5 +1,6 @@
 package com.katsuna.infoservices.managers;
 
+import com.katsuna.infoservices.facade.LocationCollectionFacade;
 import com.katsuna.infoservices.facade.RegisterFacade;
 import com.katsuna.infoservices.facade.UserFacade;
 import com.katsuna.infoservices.httpRequests.HttpManager;
@@ -74,11 +75,45 @@ public class UserManager {
         }
     }
 
+
+    public static void savePointsOfInterest(LocationCollectionFacade locationFacades, final SavePointsOfInterestOperationCompletedListener listener) {
+        try {
+            HttpManager.saveLocations(locationFacades, new KatsunaResponseHandler() {
+                @Override
+                public void onSuccess(ResponseWrapper response) {
+                    if (response.getStatusCode() == true) {
+                        try {
+                            listener.OperationCompleted(OperationCompletedStatus.Success);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            listener.OperationCompleted(OperationCompletedStatus.Error);
+                        }
+                    }
+                    else {
+                        listener.OperationCompleted(OperationCompletedStatus.ValidationError);
+                    }
+                }
+
+
+                @Override
+                public void onFailure() {
+                    listener.OperationCompleted(OperationCompletedStatus.Error);
+                }
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
     public enum OperationCompletedStatus {Success, Error, ValidationError}
 
 
     public interface RegisterOperationCompletedListener {
         void OperationCompleted(OperationCompletedStatus status, RegisterFacade organizationalUnitFacade);
+    }
+
+    public interface SavePointsOfInterestOperationCompletedListener {
+        void OperationCompleted(OperationCompletedStatus status);
     }
 
     public interface RenewTokenOperationCompletedListener {

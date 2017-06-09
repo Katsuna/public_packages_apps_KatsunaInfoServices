@@ -3,6 +3,7 @@ package com.katsuna.infoservices.httpRequests;
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.katsuna.infoservices.KatsunaInfoServicesApplication;
+import com.katsuna.infoservices.facade.LocationCollectionFacade;
 import com.katsuna.infoservices.facade.RegisterFacade;
 import com.katsuna.infoservices.facade.UserFacade;
 import com.katsuna.infoservices.http.HTTPCookieStore;
@@ -114,6 +115,33 @@ public class HttpManager extends HTTPManagerBase {
                 }));
 
 
+    }
+
+    public static void saveLocations(LocationCollectionFacade locationFacades, final KatsunaResponseHandler responseHandler) throws JSONException {
+
+        String params = new String(locationFacades.Serialize().toString());
+
+
+        enhanceAndExecuteRequest(JSONRequestWithHeaders.JSONRequestWithToken( Request.Method.POST,
+                ServerConstants.WebServer  + ServerConstants.SavePointsOfInterest  , params,
+                new JSONRequest.RequestSuccessListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            responseHandler.onSuccess(new ResponseWrapper(response));
+                            System.out.println(response);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            responseHandler.onFailure();
+                        }
+                    }
+                },
+                new JSONRequest.RequestErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        responseHandler.onFailure();
+                    }
+                }));
     }
 
 }

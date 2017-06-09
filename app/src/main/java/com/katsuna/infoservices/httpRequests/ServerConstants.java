@@ -8,15 +8,16 @@ public class ServerConstants {
 
     public static final String WebServer = "http://info.katsuna.com:8080/KatsunaInfoServer";
 
-//    public static final String WebServer = "http://devel-14.local.cite.gr:8080";
+  // public static final String WebServer = "http://devel-14.local.cite.gr:8080";
 
     // Registration Call
-
     public static final String Register = "/user/register";
 
     //Renew Token
-
     public static final String RenewToken = "/secure/user/renew_token";
+
+    //Renew Token
+    public static final String SavePointsOfInterest = "/secure/location/save";
 
 
 

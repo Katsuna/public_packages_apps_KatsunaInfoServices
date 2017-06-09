@@ -39,6 +39,18 @@ public class ResponseKeys {
     public static final String RenewToken_User_Id= "id";
     public static final String RenewToken_User_Token= "token";
 
+    // Location Facade
+
+    public static final String LocationFacade_Latitude= "latitude";
+    public static final String LocationFacade_Longitude= "longitude";
+    public static final String LocationFacade_TimesVisited= "timesVisited";
+    public static final String LocationFacade_TotalTime= "totalTime";
+    public static final String LocationFacade_Description= "description";
+    public static final String LocationFacade_SpeedAverage= "speedAverage";
+
+
+
+
 
 
 }

@@ -67,7 +67,7 @@ public class JSONRequestWithHeaders {
 
     }
 
-    public static JsonObjectRequest JSONRequestWithToken(int method, final String url, JSONObject requestBody, final JSONRequest.RequestSuccessListener requestSuccessListener, final JSONRequest.RequestErrorListener requestErrorListener) {
+    public static JsonObjectRequest JSONRequestWithToken(int method, final String url, String requestBody, final JSONRequest.RequestSuccessListener requestSuccessListener, final JSONRequest.RequestErrorListener requestErrorListener) {
 
 
         final RegisterFacade userFacade = PreferencesProvider.LoggedUserInfo();
