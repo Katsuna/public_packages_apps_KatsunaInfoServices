@@ -26,6 +26,8 @@ LOCAL_AAPT_FLAGS += --extra-packages com.jaredrummler.android.device
 LOCAL_PACKAGE_NAME := KatsunaInfoServices
 #LOCAL_PROGUARD_FLAG_FILES := app/proguard-rules.pro
 
-LOCAL_PROGUARD_ENABLED := disabled
+LOCAL_PROGUARD_FLAGS := -ignorewarnings -include build/core/proguard_basic_keeps.flags
+LOCAL_PROGUARD_ENABLED := nosystem
+LOCAL_PROGUARD_FLAG_FILES := app/proguard-rules.pro
 
 include $(BUILD_PACKAGE)
