@@ -1,3 +1,4 @@
 <resources>
+    <!-- Name of the app -->
     <string name="app_name">Katsuna Information Services</string>
 </resources>
