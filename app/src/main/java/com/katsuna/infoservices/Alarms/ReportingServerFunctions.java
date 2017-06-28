@@ -15,6 +15,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.jaredrummler.android.device.BuildConfig;
 import com.jaredrummler.android.device.DeviceName;
 import com.katsuna.infoservices.KatsunaInfoServicesApplication;
 import com.katsuna.infoservices.Preferences.PreferencesProvider;
@@ -79,8 +80,10 @@ public class ReportingServerFunctions {
             String reqString = Build.MANUFACTURER
                     + " " + Build.MODEL + " " + Build.VERSION.RELEASE
                     + " " + Build.VERSION_CODES.class.getFields()[android.os.Build.VERSION.SDK_INT].getName();
-            System.out.println("User has already been sign in " + userFacade.getToken() + " " + userFacade.getRefreshToken() + " name: " + deviceName);
-            sendPointsOfInterest();
+       //     System.out.println("User has already been sign in " + userFacade.getToken() + " " + userFacade.getRefreshToken() + " name: " + deviceName);
+            if (BuildConfig.DEBUG) {
+                sendPointsOfInterest();
+            }
 
 
         } else {
