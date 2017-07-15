@@ -81,9 +81,9 @@ public class ReportingServerFunctions {
                     + " " + Build.MODEL + " " + Build.VERSION.RELEASE
                     + " " + Build.VERSION_CODES.class.getFields()[android.os.Build.VERSION.SDK_INT].getName();
        //     System.out.println("User has already been sign in " + userFacade.getToken() + " " + userFacade.getRefreshToken() + " name: " + deviceName);
-            if (BuildConfig.DEBUG) {
-                sendPointsOfInterest();
-            }
+//             if (BuildConfig.DEBUG) {
+//                 sendPointsOfInterest();
+//             }
 
 
         } else {
