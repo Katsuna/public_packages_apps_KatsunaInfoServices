@@ -15,7 +15,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
-import com.jaredrummler.android.device.BuildConfig;
 import com.jaredrummler.android.device.DeviceName;
 import com.katsuna.infoservices.KatsunaInfoServicesApplication;
 import com.katsuna.infoservices.Preferences.PreferencesProvider;
