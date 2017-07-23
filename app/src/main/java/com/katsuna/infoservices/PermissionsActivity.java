@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 
+import com.katsuna.commons.utils.Log;
 import com.katsuna.infoservices.Preferences.PreferencesProvider;
 import com.katsuna.infoservices.facade.RegisterFacade;
 
@@ -16,46 +17,53 @@ public class PermissionsActivity extends Activity {
 
     private static final int PERMISSION_ALL = 1;
     String[] PERMISSIONS = {Manifest.permission.READ_PHONE_STATE};
+    private static final String TAG = "PermissionsActivity";
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        checkPermissions();
+    }
+
+    private void checkPermissions() {
         final RegisterFacade userFacade = PreferencesProvider.LoggedUserInfo();
 
-
-        if (!hasPermissions(this, PERMISSIONS) && (userFacade == null )  ) {
+        if (!hasPermissions(this, PERMISSIONS) && (userFacade == null )) {
+            Log.d(TAG, "missing permissions " );
             ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
         } else {
-
-            Intent myIntent = new Intent(this, ReportingService.class);
-            startService(myIntent);
-            finish();
+            Log.d(TAG, "permissions granted!" );
+            Intent activityIntent = new Intent(getApplicationContext(), ReportingService.class);
+            getApplicationContext().startService(activityIntent);
+            closeActivity(true);
         }
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        boolean permissionsGranted = false;
         switch (requestCode) {
             case PERMISSION_ALL: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                    Intent myIntent = new Intent(this, ReportingService.class);
-                    startService(myIntent);
-                    finish();
-
+                Log.d(TAG, "onRequestPermissionsResult permissions accepted: " + grantResults.length);
+                if(hasPermissions(this, PERMISSIONS)) {
+                    permissionsGranted = true;
+                    Intent activityIntent = new Intent(getApplicationContext(), ReportingService.class);
+                    getApplicationContext().startService(activityIntent);
                 }
-                else
-                {
-                    finish();
-                }
-                return;
+
+                break;
             }
-
         }
+        Log.e(TAG, "onRequestPermissionsResult finishing");
+        closeActivity(permissionsGranted);
     }
 
 
@@ -69,4 +77,13 @@ public class PermissionsActivity extends Activity {
         }
         return true;
     }
+
+    private void closeActivity(boolean permissionsGranted) {
+        Log.d(TAG, "closing Activity: " + permissionsGranted);
+        Intent intent = new Intent();
+        intent.putExtra("permissionsGranted", permissionsGranted);
+        setResult(RESULT_OK, intent);
+        finish();
+    }
+
 }

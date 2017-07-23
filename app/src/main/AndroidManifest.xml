@@ -41,8 +41,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".PermissionsActivity"
-            android:excludeFromRecents="true"
-            android:taskAffinity=""
+            android:excludeFromRecents="true">
+        <intent-filter>
+            <action android:name="com.katsuna.infoservices.permissions" />
+            <category android:name="android.intent.category.DEFAULT" />
+        </intent-filter>
 
             ></activity>
     </application>

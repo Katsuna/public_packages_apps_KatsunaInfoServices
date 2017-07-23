@@ -4,6 +4,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import com.katsuna.commons.utils.DeviceUtils;
+import com.katsuna.infoservices.MainActivity;
 import com.katsuna.infoservices.ReportingService;
 
 /**
@@ -15,9 +17,11 @@ public class StartReportingServerActivity   extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
 
 
-        if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
-            Intent myIntent = new Intent(context, ReportingService.class);
-            context.startService(myIntent);
+        if (DeviceUtils.isUserSetupComplete(context)) {
+            if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
+                Intent activityIntent = new Intent(context, MainActivity.class);
+                context.startActivity(activityIntent);
+            }
         }
 
     }
