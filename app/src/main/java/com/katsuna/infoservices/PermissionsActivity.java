@@ -37,10 +37,10 @@ public class PermissionsActivity extends Activity {
         final RegisterFacade userFacade = PreferencesProvider.LoggedUserInfo();
 
         if (!hasPermissions(this, PERMISSIONS) && (userFacade == null )) {
-            Log.d(TAG, "missing permissions " );
+            //Log.d(TAG, "missing permissions " );
             ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
         } else {
-            Log.d(TAG, "permissions granted!" );
+        //    Log.d(TAG, "permissions granted!" );
             Intent activityIntent = new Intent(getApplicationContext(), ReportingService.class);
             getApplicationContext().startService(activityIntent);
             closeActivity(true);
@@ -52,7 +52,7 @@ public class PermissionsActivity extends Activity {
         boolean permissionsGranted = false;
         switch (requestCode) {
             case PERMISSION_ALL: {
-                Log.d(TAG, "onRequestPermissionsResult permissions accepted: " + grantResults.length);
+             //   Log.d(TAG, "onRequestPermissionsResult permissions accepted: " + grantResults.length);
                 if(hasPermissions(this, PERMISSIONS)) {
                     permissionsGranted = true;
                     Intent activityIntent = new Intent(getApplicationContext(), ReportingService.class);
@@ -62,7 +62,7 @@ public class PermissionsActivity extends Activity {
                 break;
             }
         }
-        Log.e(TAG, "onRequestPermissionsResult finishing");
+      //  Log.e(TAG, "onRequestPermissionsResult finishing");
         closeActivity(permissionsGranted);
     }
 
@@ -79,7 +79,7 @@ public class PermissionsActivity extends Activity {
     }
 
     private void closeActivity(boolean permissionsGranted) {
-        Log.d(TAG, "closing Activity: " + permissionsGranted);
+    //    Log.d(TAG, "closing Activity: " + permissionsGranted);
         Intent intent = new Intent();
         intent.putExtra("permissionsGranted", permissionsGranted);
         setResult(RESULT_OK, intent);

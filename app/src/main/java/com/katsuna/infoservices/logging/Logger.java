@@ -10,7 +10,7 @@ public class Logger {
 
     public static void Log(String message) {
         //if (BuildConfig.LOG) {
-            Log.i(LOGTAG, message);
+         //   Log.i(LOGTAG, message);
         //}
     }
 }
