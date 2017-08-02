@@ -39,8 +39,8 @@ public class MainActivity extends Activity {
 //            }
 //        }
 
-        Intent activityIntent = new Intent(getApplicationContext(),PermissionsActivity.class);
-        getApplicationContext().startActivity(activityIntent);
+        Intent activityIntent = new Intent(getApplicationContext(), ReportingService.class);
+        getApplicationContext().startService(activityIntent);
         finish();
     }
 
