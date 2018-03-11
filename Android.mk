@@ -10,6 +10,8 @@ LOCAL_MANIFEST_FILE := app/src/main/AndroidManifest.xml
 LOCAL_FULL_LIBS_MANIFEST_FILES := $(KATSUNA_COMMON_PATH)/commons/src/main/AndroidManifest.xml
 LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/app/src/main/res
 LOCAL_RESOURCE_DIR += frameworks/support/v7/appcompat/res
+LOCAL_RESOURCE_DIR += frameworks/support/v7/cardview/res
+LOCAL_RESOURCE_DIR += frameworks/support/design/res
 
 # Include KatsunaCommon into this app
 LOCAL_REQUIRED_MODULES := KatsunaCommon
@@ -21,6 +23,8 @@ LOCAL_STATIC_JAVA_LIBRARIES += android-support-v4
 LOCAL_STATIC_JAVA_LIBRARIES += android-support-v7-appcompat
 LOCAL_STATIC_JAVA_LIBRARIES += androidvolley
 LOCAL_STATIC_JAVA_LIBRARIES += googlegson
+LOCAL_STATIC_JAVA_LIBRARIES += android-support-v7-cardview
+LOCAL_STATIC_JAVA_LIBRARIES += android-support-design
 
 LOCAL_STATIC_JAVA_AAR_LIBRARIES := androiddevicenames
 LOCAL_STATIC_JAVA_AAR_LIBRARIES += roundedimageview
