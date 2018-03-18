@@ -12,6 +12,7 @@ LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/app/src/main/res
 LOCAL_RESOURCE_DIR += frameworks/support/v7/appcompat/res
 LOCAL_RESOURCE_DIR += frameworks/support/v7/cardview/res
 LOCAL_RESOURCE_DIR += frameworks/support/design/res
+LOCAL_RESOURCE_DIR += frameworks/support/v7/recyclerview/res
 
 # Include KatsunaCommon into this app
 LOCAL_REQUIRED_MODULES := KatsunaCommon
@@ -25,6 +26,7 @@ LOCAL_STATIC_JAVA_LIBRARIES += androidvolley
 LOCAL_STATIC_JAVA_LIBRARIES += googlegson
 LOCAL_STATIC_JAVA_LIBRARIES += android-support-v7-cardview
 LOCAL_STATIC_JAVA_LIBRARIES += android-support-design
+LOCAL_STATIC_JAVA_LIBRARIES += android-support-v7-recyclerview
 
 LOCAL_STATIC_JAVA_AAR_LIBRARIES := androiddevicenames
 LOCAL_STATIC_JAVA_AAR_LIBRARIES += roundedimageview
