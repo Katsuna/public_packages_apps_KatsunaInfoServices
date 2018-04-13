@@ -10,6 +10,15 @@
 -dontoptimize
 -dontpreverify
 
+# This is needed to allow release builds from android studio.
+-ignorewarnings
+
+# For enumeration classes, see http://proguard.sourceforge.net/manual/examples.html#enumerations
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+
 # Keep enough data for stack traces
 -keepnames class **
 -renamesourcefileattribute SourceFile
@@ -23,6 +32,13 @@
 
 # Keep all libraries
 -keep class android.support.** { *; }
+-keep class org.joda.** { *; }
 -keep class com.jaredrummler.** { *; }
 -keep class com.google.** { *; }
+-keep class com.makeramen.** { *; }
 -keep class com.mcxiaoke.** { *; }
+-keep class com.squareup.** { *; }
+
+# Hide warnings
+-dontwarn com.squareup.**
+-dontwarn org.joda.**
