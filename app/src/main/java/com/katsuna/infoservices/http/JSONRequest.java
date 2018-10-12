@@ -11,64 +11,64 @@ import org.json.JSONObject;
 
 public class JSONRequest extends JsonObjectRequest {
 
-    public JSONRequest(int method, final String url, String requestBody, final RequestSuccessListener requestSuccessListener, final RequestErrorListener requestErrorListener) {
-
-        super(method, url, requestBody, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                Logger.Log("Response from: " + url + ": " + response);
-                if (requestSuccessListener != null)
-                    requestSuccessListener.onResponse(response);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Logger.Log("Error from: " + url + ": " + error.getLocalizedMessage());
-                if (requestErrorListener != null)
-                    requestErrorListener.onErrorResponse(error);
-            }
-        });
-
-
-    }
-
-
-
-    public JSONRequest(final String url, final RequestSuccessListener requestSuccessListener, final RequestErrorListener requestErrorListener) {
-        super(url, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                Logger.Log("Response from: " + url + ": " + response);
-                if (requestSuccessListener != null)
-                    requestSuccessListener.onResponse(response);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Logger.Log("Error from: " + url + ": " + error.getLocalizedMessage());
-                if (requestErrorListener != null)
-                    requestErrorListener.onErrorResponse(error);
-            }
-        });
-    }
-
-    public JSONRequest(int method, final String url, final RequestSuccessListener requestSuccessListener, final RequestErrorListener requestErrorListener) {
-        super(method, url, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                Logger.Log("Response from: " + url + ": " + response);
-                if (requestSuccessListener != null)
-                    requestSuccessListener.onResponse(response);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Logger.Log("Error from: " + url + ": " + error.getLocalizedMessage());
-                if (requestErrorListener != null)
-                    requestErrorListener.onErrorResponse(error);
-            }
-        });
-    }
+//    public JSONRequest(int method, final String url, String requestBody, final RequestSuccessListener requestSuccessListener, final RequestErrorListener requestErrorListener) {
+//
+//        super(method, url, new JSONObject(requestBody), new Response.Listener<JSONObject>() {
+//            @Override
+//            public void onResponse(JSONObject response) {
+//                Logger.Log("Response from: " + url + ": " + response);
+//                if (requestSuccessListener != null)
+//                    requestSuccessListener.onResponse(response);
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                Logger.Log("Error from: " + url + ": " + error.getLocalizedMessage());
+//                if (requestErrorListener != null)
+//                    requestErrorListener.onErrorResponse(error);
+//            }
+//        });
+//
+//
+//    }
+//
+//
+//
+//    public JSONRequest(final String url, final RequestSuccessListener requestSuccessListener, final RequestErrorListener requestErrorListener) {
+//        super(url, new Response.Listener<JSONObject>() {
+//            @Override
+//            public void onResponse(JSONObject response) {
+//                Logger.Log("Response from: " + url + ": " + response);
+//                if (requestSuccessListener != null)
+//                    requestSuccessListener.onResponse(response);
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                Logger.Log("Error from: " + url + ": " + error.getLocalizedMessage());
+//                if (requestErrorListener != null)
+//                    requestErrorListener.onErrorResponse(error);
+//            }
+//        });
+//    }
+//
+//    public JSONRequest(int method, final String url, final RequestSuccessListener requestSuccessListener, final RequestErrorListener requestErrorListener) {
+//        super(method, url, new Response.Listener<JSONObject>() {
+//            @Override
+//            public void onResponse(JSONObject response) {
+//                Logger.Log("Response from: " + url + ": " + response);
+//                if (requestSuccessListener != null)
+//                    requestSuccessListener.onResponse(response);
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                Logger.Log("Error from: " + url + ": " + error.getLocalizedMessage());
+//                if (requestErrorListener != null)
+//                    requestErrorListener.onErrorResponse(error);
+//            }
+//        });
+//    }
 
     public JSONRequest(int method, final String url, JSONObject jsonRequest, final RequestSuccessListener requestSuccessListener, final RequestErrorListener requestErrorListener) {
         super(method, url, jsonRequest, new Response.Listener<JSONObject>() {

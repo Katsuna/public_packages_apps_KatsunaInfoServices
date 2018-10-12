@@ -12,6 +12,7 @@ import com.katsuna.infoservices.Preferences.PreferencesProvider;
 import com.katsuna.infoservices.facade.RegisterFacade;
 import com.katsuna.infoservices.logging.Logger;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -67,14 +68,14 @@ public class JSONRequestWithHeaders {
 
     }
 
-    public static JsonObjectRequest JSONRequestWithToken(int method, final String url, String requestBody, final JSONRequest.RequestSuccessListener requestSuccessListener, final JSONRequest.RequestErrorListener requestErrorListener) {
+    public static JsonObjectRequest JSONRequestWithToken(int method, final String url, String requestBody, final JSONRequest.RequestSuccessListener requestSuccessListener, final JSONRequest.RequestErrorListener requestErrorListener) throws JSONException {
 
 
         final RegisterFacade userFacade = PreferencesProvider.LoggedUserInfo();
 
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(
-                Request.Method.POST, url, requestBody,
+                Request.Method.POST, url, new JSONObject(requestBody),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
