@@ -23,11 +23,11 @@ LOCAL_STATIC_ANDROID_LIBRARIES := \
     android-support-design
 
 LOCAL_STATIC_JAVA_LIBRARIES := \
-    androidvolley \
     googlegson
 
 LOCAL_STATIC_JAVA_AAR_LIBRARIES := \
     androiddevicenames \
+    androidvolley \
     roundedimageview
 
 LOCAL_AAPT_INCLUDE_ALL_RESOURCES := true
